@@ -5,8 +5,12 @@
 {% block content %}
     <h1>{{ls.name}}</h1>
     <ul>
-    {% for item in ls.item_set.all %} <!--Don't need brackets for the .all()-->
-        <li>{{item.text}}</li>
-    {% end for %}
+    {% for item in ls.item_set.all %} <!--Don't need brackets for the .all() - This FOR loop allows us to DISPLAY HTML elements-->
+        {% if item.complete == False %}
+            <li>{{item.text}} - COMPLETE</li>
+        {% else %}
+            <li>{{item.text}} - INCOMPLETE</li>
+        {% endif %} <!--No need for an endElse-->
+    {% endfor %}
     </ul>
 {% endblock %}

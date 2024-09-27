@@ -1,0 +1,14 @@
+{% extends "DFBApp/base.html" %}
+
+{% block title %} Create New List {% endblock %}
+
+{% block content %} 
+Create Page 
+<form method="post" action="/create/">
+    {% csrf_token %} 
+    <!--Unlike HTML, we don't need to write any HTML code for a form, we just need to write the form fields and their respective data types -->
+    <!-- Django does the rest (See forms.py)-->
+    {{form}} <!--There are different types of form layouts: form.as_table, form.as_p, from.as_ul-->
+    <button type="submit", name="save">Create New </button>
+</form>
+{% endblock %}

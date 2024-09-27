@@ -30,6 +30,8 @@ urlpatterns = [
     #To the idbs1 function's "name" parameter. However, if the function's parameter name changes e.g "username", then the name string can't
     #be passed to the idbs2 function's "username" parameter because the variable name here "name" doesn't match the functions arguement
 
-    path("home/",views.home)
+    path("home/",views.home),
+
+    path("create/", views.create, name="create")
 ]
 #Django looks at this list to determine which view should handle a specific URL.

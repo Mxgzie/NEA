@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse 
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import ToDoList, Item
 from urllib.parse import unquote
+from .forms import CreateNewList
 # HttpReponse allows you to send HTTP responses directly to the user, typically used to send raw HTML, text, or other data.
 
 # Create your views here.
@@ -33,7 +34,7 @@ def listView(request, name): #Retrieves a ToDoList by its name
     #.get() is a method that retrieves a single record from the table where the string "name" matches the string passed to the function
     #The record is then stored in the variable "ls"
 
-    items = ls.items_set.all()
+    items = ls.item_set.all()
     #items_set allows us to get items related to the ToDoList we stored in ls
     #.get() allows us to specify the item by a certain value (e.g its id)
     #.all() allows us to get all the items under the stored ToDoList in ls
@@ -43,6 +44,19 @@ def listView(request, name): #Retrieves a ToDoList by its name
 
 def home(request):
     return render(request, "DFBApp/home.html", {}) #Renders the home.html file
+
+def create(request):
+    if request.method == "POST":
+        form = CreateNewList(request.POST)
+         
+        if form.is_valid():
+            n = form.cleaned_data["name"]
+            t = ToDoList(name=n)
+        
+        return HttpResponseRedirect("%i" %t.id)
+    else:
+        form = CreateNewList
+    return render(request, "DFBApp/create.html", {"form":form})
 
 #pass: 12345 / #user: migzm
 
