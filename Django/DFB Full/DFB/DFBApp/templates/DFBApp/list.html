@@ -4,13 +4,23 @@
 
 {% block content %}
     <h1>{{ls.name}}</h1>
-    <ul>
-    {% for item in ls.item_set.all %} <!--Don't need brackets for the .all() - This FOR loop allows us to DISPLAY HTML elements-->
-        {% if item.complete == False %}
-            <li>{{item.text}} - COMPLETE</li>
-        {% else %}
-            <li>{{item.text}} - INCOMPLETE</li>
-        {% endif %} <!--No need for an endElse-->
-    {% endfor %}
-    </ul>
+    <form method="post" action="#"> <!--POST means data will be sent to the server when the form is submitted. "#" keeps the form submission on the same page-->
+        {% csrf_token %}
+        <ul>
+            {% for item in ls.item_set.all %} <!--Don't need brackets for the .all() - This FOR loop allows us to DISPLAY HTML elements-->
+                {% if item.complete == False %}
+                    <li><input type="checkbox", value="clicked", name="c{{item.id}}">{{item.text}}</li> <!--Creates a list item that has a checkbox before it-->
+                    <!--value="clicked" means that when the checkbox is clicked, "clicked" will be sent to the server when the form is submitted-->
+                    <!--name="c{{item.id}}" names the checkbox based on its id so the checkbox value for each box can be reffered to later when data is sent-->
+                    <!--IF THE BOX IS CLICKED THE FORM WILL SEND: c1 = clicked, c2 = clicked | Checkboxes that aren't clicked wont have anything sent-->
+                    {% else %}
+                    <li><input type="checkbox", value="clicked", name="c{{item.id}}" checked>{{item.text}}</li>
+                    <!--"checked" will render the webpage with the box clicked by default-->
+                {% endif %} <!--No need for an endElse-->
+            {% endfor %}
+        </ul>
+        <button type="submit", name="save", value ="save">Save</button>
+        <input type="text", name="name">
+        <button type="submit", name="newItem", value ="newItem">Add Item</button>
+    </form>"
 {% endblock %}

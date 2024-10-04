@@ -14,17 +14,13 @@ urlpatterns = [
     # (like templates or redirects), instead of hardcoding the URL path. Good because if the URL path ever changes, you only need to update it here
     # and not everywhere in your project.
 
-    path("v1/", views.v1, name= "view1"),
-    #Recieves paths from the main urls.py file. If (root)/v1/ was typed, then "v1/" is sent to this file, and so the index view function from the 
-    # views module is activated
-
-    path("<int:id>",views.idbs1), 
+    path("<int:id>",views.listViewById), 
     #If the url is xxxxx.com/5 the variable "id" will store "5" as an integer. This value then gets passed to the idbs1 function
     #Since the idbs1 function has the parameters "request" and "id", the path method will be able to pass this "id" variable from the URL
     #To the idbs1 function's "id" parameter. However, if the function's parameter name changes e.g "idNum", then the integer 5 will not be able 
     #to be passed to the idbs1 function's "idNum" parameter because the variable name here "id" doesn't match the functions arguement
 
-    path("<str:name>",views.listView),
+    path("<str:name>",views.listViewByName),
     #If the url is xxxxx.com/bob the variable "name" will store "bob" as an string. This value then gets passed to the idbs2 function
     #Since the idbs2 function has the parameters "request" and "name", the path method will be able to pass this "name" variable from the URL
     #To the idbs1 function's "name" parameter. However, if the function's parameter name changes e.g "username", then the name string can't

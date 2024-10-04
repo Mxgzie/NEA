@@ -13,50 +13,74 @@ def index(request): # "response" parameter represents the incoming HTTP request.
     #Returns an HTTP response containing the HTML <h1>Migz' Site</h1> back to
     #the user's browser - The object contains information about the user's
     #request, like what URL they visited, their browser info, etc.
-    
+    ls = To
+    if request.method == "POST":
+        print("request.POST")
+        if request.POST.get("save"):
+            for item in ls
     return render(request, "DFBApp/base.html", {}) #The render function can take a dictionary of variables that can be used to dynamically change webpages based on different variable values
 
-def v1(request):
-    return HttpResponse("<h1>View 1</h1>")
-
-def idbs1(request, id): #Retrieves a ToDoList by its id
+def listViewById(request, id): #Retrieves a ToDoList by its id
     ls = ToDoList.objects.get(id=id) 
     #Objects is the default manager for the ToDoList TABLE which allows you to interact with the database
     #.get() is a method that retrieves a single record from the table where the value "id" matches the value passed to the function
-    return render(request, "DFBApp/base.html", {})
-    #Displays the name of the ToDoList (%s is a placeholder for substitution, and the value in %ls.name will be placed here)
+    
+    if request.POST.get("save"):
+            for item in ls.item_set.all():
+                if request.POST.get("c"+str(item.id)) == "clicked":
+                    item.complete = True
+                else:
+                    item.complete = False
+
+                item.save()
+        
+    elif request.POST.get("newItem"):
+        text = request.POST.get("new")
+
+        if len(text) > 2:
+            ls.item_
+    items = ls.item_set.all()
+    return render(request, "DFBApp/list.html",{"ls":ls}) 
+    #See listViewByName for explanation of code
 
 
-def listView(request, name): #Retrieves a ToDoList by its name
+def listViewByName(request, name): #Retrieves a ToDoList by its name
     name = unquote(name) #Converts "First%20List" to "First List"
     ls = ToDoList.objects.get(name=name)
     #Objects is the default manager for the ToDoList TABLE which allows you to interact with the database
     #.get() is a method that retrieves a single record from the table where the string "name" matches the string passed to the function
-    #The record is then stored in the variable "ls"
+    #In this case, an instance of ToDoList is retrieved and stored in the variable "ls"
 
     items = ls.item_set.all()
     #items_set allows us to get items related to the ToDoList we stored in ls
     #.get() allows us to specify the item by a certain value (e.g its id)
     #.all() allows us to get all the items under the stored ToDoList in ls
-    #return HttpResponse("<h1>%s</h1><br></br><p>%s</p>" %(ls.name, str(items.text)))
-
-    return render(request, "DFBApp/list.html",{"ls":ls})
+    return render(request, "DFBApp/list.html",{"ls":ls}) 
+    #Renders the list.html template which basically displays the list, and the items part of it, which is stored in ls
+     #If the key was "list1", then the list has to be referred as list1 in the HTML
 
 def home(request):
     return render(request, "DFBApp/home.html", {}) #Renders the home.html file
 
-def create(request):
-    if request.method == "POST":
-        form = CreateNewList(request.POST)
-         
-        if form.is_valid():
-            n = form.cleaned_data["name"]
-            t = ToDoList(name=n)
-        
-        return HttpResponseRedirect("%i" %t.id)
-    else:
-        form = CreateNewList
-    return render(request, "DFBApp/create.html", {"form":form})
+def create(request): # Creates a new toDoList
+    if request.method == "POST": #Checks if the HTTP request is trying to send data to the server (e.g. user submitted a form)
+        form = CreateNewList(request.POST) #Creates a new instance of the form with the data submitted by the user via the POST request (See forms.py)
+        if form.is_valid(): #Checks if the form satisfies all the validation rules that it has (see forms.py)
+            #When .is_valid() is called, a temporary dictionary called "cleaned_data" is created for each form submission with each key pair value
+            # cleaned_data = {"name":"x","check":True}
+
+            n = form.cleaned_data["name"] #Assigns the name value from the dictionary to n
+            t = ToDoList(name=n) #Creates a new instance of the ToDoList model (seel models.py) with the name set to the value in 'n'
+        return HttpResponseRedirect("%i" %t.id) #Creates a new HTTP request to redirect the user to xxx/t.id/ where t.id would be an integer
+        #This will therefore run the idbs1() view
+    
+
+    else: #If the HTTP request is not POST, e.g. if the user is trying to access the form for the first time, not submitting it
+        form = CreateNewList #Creates a blank form instance with no data, usually used to display the empty form for the first before users add to it
+
+    return render(request, "DFBApp/create.html", {"form":form}) 
+    #Renders the create.html template with the "form" variable defined in this function passed into the template
+    #If the key was "form1", then the form has to be referred as form1 in the HTML
 
 #pass: 12345 / #user: migzm
 

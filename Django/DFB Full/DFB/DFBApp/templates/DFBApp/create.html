@@ -9,6 +9,7 @@ Create Page
     <!--Unlike HTML, we don't need to write any HTML code for a form, we just need to write the form fields and their respective data types -->
     <!-- Django does the rest (See forms.py)-->
     {{form}} <!--There are different types of form layouts: form.as_table, form.as_p, from.as_ul-->
+    <!--This "form" value above was passed from the create() views. So the instance of the form and its data will be displayed automatically by Django-->
     <button type="submit", name="save">Create New </button>
 </form>
 {% endblock %}
