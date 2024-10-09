@@ -7,7 +7,7 @@ from . import views #Import views from the current directory
 
 
 urlpatterns = [
-    path("", views.index, name= "index"), #This will not display anything (Refer to base.html for explanation)
+    # path("", views.index, name= "index"), #This will not display anything (Refer to base.html for explanation)
     #Recieves paths from the main urls.py file. If (root)/ was typed, then "" is sent to this file, and so the index view function from the views 
     # module is activated
     # name="index" is an optional name for the URL pattern. Giving a name to the URL pattern allows you to refer to it in other places in your code

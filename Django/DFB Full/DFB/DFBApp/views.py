@@ -8,38 +8,43 @@ from .forms import CreateNewList
 # Create your views here.
 
 #Handles incoming web requests and returns a response to the user
-def index(request): # "response" parameter represents the incoming HTTP request.
-    #return HttpResponse("<h1>Migz' Site</h1>") - This is inefficient as we could use HTML template files instead of hardcoding HTML within brackets
-    #Returns an HTTP response containing the HTML <h1>Migz' Site</h1> back to
-    #the user's browser - The object contains information about the user's
-    #request, like what URL they visited, their browser info, etc.
-    ls = To
-    if request.method == "POST":
-        print("request.POST")
-        if request.POST.get("save"):
-            for item in ls
-    return render(request, "DFBApp/base.html", {}) #The render function can take a dictionary of variables that can be used to dynamically change webpages based on different variable values
+# def index(request): # "response" parameter represents the incoming HTTP request.
+#     #return HttpResponse("<h1>Migz' Site</h1>") - This is inefficient as we could use HTML template files instead of hardcoding HTML within brackets
+#     #Returns an HTTP response containing the HTML <h1>Migz' Site</h1> back to
+#     #the user's browser - The object contains information about the user's
+#     #request, like what URL they visited, their browser info, etc.
+#     ls = ToDoList.objects.all()
+#     if request.method == "POST":
+#         print("request.POST")
+#         if request.POST.get("save"):
+#             for item in ls:
+#     return render(request, "DFBApp/base.html", {}) #The render function can take a dictionary of variables that can be used to dynamically change webpages based on different variable values
 
 def listViewById(request, id): #Retrieves a ToDoList by its id
     ls = ToDoList.objects.get(id=id) 
     #Objects is the default manager for the ToDoList TABLE which allows you to interact with the database
     #.get() is a method that retrieves a single record from the table where the value "id" matches the value passed to the function
     
-    if request.POST.get("save"):
-            for item in ls.item_set.all():
-                if request.POST.get("c"+str(item.id)) == "clicked":
-                    item.complete = True
+    if request.POST.get("save"): #Checks the data sent via POST from the client's browser and tries to retrieve the value associated with the key "save"
+            #If the key exists in the data it means save was clicked and the statement evaluates to True
+            for item in ls.item_set.all(): #Loops through all the items in the ToDoList instance retreived from the DB via item_set.all() command
+                if request.POST.get("c"+str(item.id)) == "clicked": #Checks if the checkbox for the item was clicked 
+                    item.complete = True 
                 else:
                     item.complete = False
 
-                item.save()
+                item.save() #Saves the updated item.complete attribute back to the DB 
         
-    elif request.POST.get("newItem"):
-        text = request.POST.get("new")
+    elif request.POST.get("newItem"): #Checks the data sent via POST from the client's browser and tries to retrieve the value associated with the key "newItem"
+        #If the key exists in the data it means addItem was clicked and the statement evaluates to True
+        text = request.POST.get("new") #Retrieves the value from the input field labelled "new"
 
         if len(text) > 2:
-            ls.item_
-    items = ls.item_set.all()
+            ls.item_set.create(text=text, complete=False)
+            #A new item instance is created with text being set to the value from the input field, and complete being set to False
+        else: #If the new item isn't 2 chars long, item is invalid
+            print("invalid")
+            
     return render(request, "DFBApp/list.html",{"ls":ls}) 
     #See listViewByName for explanation of code
 

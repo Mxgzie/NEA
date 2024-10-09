@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'DFBApp.apps.DfbappConfig' #Tells Django that our app has some dependencies like databases that need to be set up
+    'DFBApp.apps.DfbappConfig',#Tells Django that our app has some dependencies like databases that need to be set up
+    'userlogin.apps.UserloginConfig'
 ]
 
 MIDDLEWARE = [
