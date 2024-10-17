@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>{% block title %}Dashboard{% endblock %}</title> <!--Migz' website will be a default value, and any HTML file that inherits from this base.html will replace the default value if there is a "title" block to be inserted in the HTML file-->
+    </head>
+    <body>
+        <div id="content">
+            {% block content %} <!--The blocks can allow different templates to display different content within the block depending on the webpage-->
+            {% endblock %}  <!--If the base.html file is rendered, nothing shows up because the "content" block is a placeholder -->
+        </div>
+        <h1>Hello</h1>
+    </body>
+</html>

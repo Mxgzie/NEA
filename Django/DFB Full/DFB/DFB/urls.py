@@ -23,5 +23,6 @@ urlpatterns = [
     #in DFBApp and only sends the link FOLLOWING THE ROOT (E.g: only v1/ is sent to urls.py if (root)/v1/ is typed) - (See urls.py in DFB for further explanation)
     path('admin/', admin.site.urls), # If a link has "admin/"" after the root (127.0.0.1/), the admin control panel is opened
     #Goes to the urls.py file that was defined in the DFBApp when http://127.0.0.1:8000/ or http://127.0.0.1:8000/xxxxx is typed
-    path('login/',v.login, name = "login")
+    path('register/',v.register, name = "register"),
+    path("", include("django.contrib.auth.urls")),
 ]

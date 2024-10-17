@@ -1,5 +1,5 @@
 from django.db import models # Gives us tools to define how data will be structured and stored in the database.
-
+from django.contrib.auth.models import User
 #Models are representations of tables in a database - Each class in this file represents a table, and each class attribute represents a column 
 # in that table
 
@@ -7,6 +7,7 @@ from django.db import models # Gives us tools to define how data will be structu
 
 class ToDoList(models.Model): #Inheritance here tells Django to treat this as a database table
     name = models.CharField(max_length=200) #Creates a column in the table called name
+    user = models.ForeignKey(User,on_delete=models.CASCADE) #Tells Django that every todolist we create will be linked to a user
 
     def __str__(self):
         return self.name
@@ -20,3 +21,4 @@ class Item(models.Model):
 
     def __str__(self):
         return self.text
+

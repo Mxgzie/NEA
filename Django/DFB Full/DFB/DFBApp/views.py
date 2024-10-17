@@ -75,7 +75,9 @@ def create(request): # Creates a new toDoList
             # cleaned_data = {"name":"x","check":True}
 
             n = form.cleaned_data["name"] #Assigns the name value from the dictionary to n
-            t = ToDoList(name=n) #Creates a new instance of the ToDoList model (seel models.py) with the name set to the value in 'n'
+            request.user.todolist_set.create(name=n)
+            # t = ToDoList(name=n) #Creates a new instance of the ToDoList model (seel models.py) with the name set to the value in 'n'
+
         return HttpResponseRedirect("%i" %t.id) #Creates a new HTTP request to redirect the user to xxx/t.id/ where t.id would be an integer
         #This will therefore run the idbs1() view
     

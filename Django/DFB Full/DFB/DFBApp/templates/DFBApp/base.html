@@ -4,8 +4,12 @@
     </head>
     <body>
         <div id="content", name="content">
-        {% block content %} <!--The blocks can allow different templates to display different content within the block depending on the webpage-->
-        {% endblock %}  <!--If the base.html file is rendered, nothing shows up because the "content" block is a placeholder -->
+        <!-- {% if user.is_authenticated %} -->
+            {% block content %} <!--The blocks can allow different templates to display different content within the block depending on the webpage-->
+            {% endblock %}  <!--If the base.html file is rendered, nothing shows up because the "content" block is a placeholder -->
+        <!-- {% else %}
+            <p>Login <a href="/login">Here</a></p>
+        {% endif %} -->
         </div>
         </body>
     </body>
