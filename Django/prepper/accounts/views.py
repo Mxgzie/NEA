@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 
 # Create your views here.
-def register(request):
+def register(request): #Allows user to REGISTER an account for the FIRST time
+    if request.user.is_authenticated:
+        return redirect("/dashboard")
+    
     if request.method == "POST": #If the user is submitting data
         form = RegisterForm(request.POST) #Create an instance of RegisterForm with the POST data (See forms.py for explanation of the class)
         if form.is_valid():
