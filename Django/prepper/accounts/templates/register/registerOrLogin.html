@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register or Login</title>
+</head>
+<body>
+    <h1>Welcome! Please choose an option</h1>
+
+    <!-- Form for the user to select either Register or Login -->
+    <form method="GET">
+        <button type="submit" formaction="{% url 'register' %}">Register</button>  <!-- Redirect to registration page -->
+        <button type="submit" formaction="{% url 'login' %}">Login</button>  <!-- Redirect to login page -->
+    </form>
+
+</body>
+</html>

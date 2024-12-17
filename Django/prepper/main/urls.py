@@ -17,8 +17,27 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts import views as aviews
+from django.conf import settings
+from django.conf.urls.static import static
+from assessments import views as asviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('', aviews.register),]
+    path('', aviews.registerOrLogin),
+    path('register/', aviews.register, name = "register"),
+    path('login/', aviews.user_login, name = "login"),
+    path('home/', include('dashboard.urls')),
+    path('random/', asviews.view_questions, name = "random"),
+]
+
+if settings.DEBUG: 
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # This line tells Django to serve media files like images, videos, and documents
+    # from the file system to the browser during development. It uses the settings 
+    # MEDIA_URL to determine the URL path (e.g., /media/) and MEDIA_ROOT to determine
+    # where on the local file system the files are stored.
+    # It uses MEDIA_URL for the web address (e.g., /media/) and MEDIA_ROOT for where the files are saved on your computer.
+
+#migzm
+#GOMEZ2006

@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+
+# Load environment variables from the .env file like our API Token Key
+load_dotenv()
+HF_API_KEY = os.getenv("HF_API_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'assessments.apps.AssessmentsConfig',
     'dashboard.apps.DashboardConfig',
     
 ]
@@ -124,3 +132,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'  # The URL for accessing media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # The file system path where media files are stored

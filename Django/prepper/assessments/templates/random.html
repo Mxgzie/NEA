@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Questions</title>
+</head>
+<body>
+    <h1>Here are 3 random questions:</h1>
+
+    <form method="POST"> <!--Allows us to gather user input and send it as a POST request to the DB-->
+        {% csrf_token %}
+        {% for question in questions %} <!--Loops through each question in the Questions list that was PASSED AS AN ARGUEMENT FROM THE VIEW THAT RENDERS THIS TEMPLATE-->
+            <p>Question Number: {{ question.Qnum }}</p>
+            <div>
+                <!-- Display Question Number, Text, and Marks -->
+                <p><strong>{{ question.Qnum }}</strong>: {{ question.text|linebreaksbr }} <strong>[{{ question.marks }} Marks]</strong></p>
+                <!--Linebreaksbr converts any \n (New Line characters) to text on new lines so paragraphs appear on the page if they're in the question's text-->
+
+                <!-- Display Question Image (if any) -->
+                {% if question.image %}
+                    <img src="{{ question.image.url }}" alt="Question Image" style="max-width: 300px; height: auto;">
+                {% endif %}
+
+                <!-- Multi line text input area for User's Answer -->
+                <textarea name="answer_text_{{ question.Qnum }}" rows="4" cols="60" placeholder="Write your answer here..."></textarea>
+                <!--Name of the text area is dynamically set so it is unique to each question's number. E.g This will turn into Text Area 1 w/ the name "answer_text_01.1" for question 01.1-->
+                <!--rows + cols just dictate how big the text area is-->
+                <hr> <!-- Adds a horizontal line between questions -->
+            </div>
+        {% endfor %} <!--Ends the loop-->
+        <button type="submit">Submit Answers</button> <!--When the button is clicked, the form submission will trigger and send the data to the database via POST request -->
+    </form>
+    
+</body>
+</html>

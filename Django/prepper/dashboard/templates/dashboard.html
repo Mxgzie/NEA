@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Welcome back</h1>
+    <h1>Welcome back {{ request.user.username }}!</h1>
+
+    <!-- Button that links to the /random/ page -->
+    <a href="{% url 'random' %}">
+        <button>Go to Random Questions</button>
+    </a>
 {% endblock %}
