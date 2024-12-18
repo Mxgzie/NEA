@@ -13,11 +13,26 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import requests
 
 
 # Load environment variables from the .env file like our API Token Key
 load_dotenv()
 HF_API_KEY = os.getenv("HF_API_KEY")
+
+headers = {
+    "Authorization": f"Bearer {HF_API_KEY}"
+}
+
+response = requests.get("https://api-inference.huggingface.co/models/mistralai/Mistral-Nemo-Instruct-2407", headers=headers)
+print(response.status_code, response.text)
+
+if response.status_code == 200:
+    print("API Key is valid!")
+    print(response.json())  # Optional: Print user details
+else:
+    print(f"API Key failed: {response.status_code}")
+    print(response.text)  # Optional: Show error details
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

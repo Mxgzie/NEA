@@ -29,6 +29,8 @@ urlpatterns = [
     path('login/', aviews.user_login, name = "login"),
     path('home/', include('dashboard.urls')),
     path('random/', asviews.view_questions, name = "random"),
+    # path('submit_answers/', asviews.submit_answers, name='submit_answers'),
+    path('mistraltest/', asviews.mistral_test_view, name='mistral_test'),
 ]
 
 if settings.DEBUG: 
